@@ -1,4 +1,6 @@
 package iseng.cafe.pos.models.snackType;
 
-public class SnackTypeSearch {
+import iseng.cafe.pos.models.PageSearch;
+
+public class SnackTypeSearch extends PageSearch {
 }

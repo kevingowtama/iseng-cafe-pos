@@ -1,5 +1,7 @@
 package iseng.cafe.pos.models.admin;
 
+import iseng.cafe.pos.entities.AdminType;
+
 public class AdminRequest {
     private String name;
 
@@ -8,6 +10,8 @@ public class AdminRequest {
     private String username;
 
     private String password;
+
+    private Integer adminTypeId;
 
     public String getName() {
         return name;
@@ -39,5 +43,13 @@ public class AdminRequest {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Integer getAdminTypeId() {
+        return adminTypeId;
+    }
+
+    public void setAdminTypeId(Integer adminTypeId) {
+        this.adminTypeId = adminTypeId;
     }
 }

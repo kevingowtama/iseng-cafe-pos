@@ -1,6 +1,7 @@
 package iseng.cafe.pos.models.adminType;
 
 public class AdminTypeRequest {
+
     private String name;
 
     public String getName() {

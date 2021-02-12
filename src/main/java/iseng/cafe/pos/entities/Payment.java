@@ -30,11 +30,11 @@ public class Payment extends AbstractEntity<Integer>{
         this.id = id;
     }
 
-    public MenuOrder getOrder() {
+    public MenuOrder getMenuOrder() {
         return menuOrder;
     }
 
-    public void setOrder(MenuOrder menuOrder) {
+    public void setMenuOrder(MenuOrder menuOrder) {
         this.menuOrder = menuOrder;
     }
 

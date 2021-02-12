@@ -5,19 +5,18 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import iseng.cafe.pos.entities.Admin;
+import iseng.cafe.pos.entities.AdminType;
 import iseng.cafe.pos.entities.Customer;
 import iseng.cafe.pos.entities.MenuOrder;
-import iseng.cafe.pos.entities.Payment;
-import iseng.cafe.pos.entities.PaymentMethod;
 import iseng.cafe.pos.models.PagedList;
 import iseng.cafe.pos.models.ResponseMessage;
-import iseng.cafe.pos.models.payment.PaymentRequest;
-import iseng.cafe.pos.models.payment.PaymentResponse;
-import iseng.cafe.pos.models.payment.PaymentSearch;
+import iseng.cafe.pos.models.menuOrder.MenuOrderRequest;
+import iseng.cafe.pos.models.menuOrder.MenuOrderResponse;
+import iseng.cafe.pos.models.menuOrder.MenuOrderSearch;
+import iseng.cafe.pos.services.AdminService;
 import iseng.cafe.pos.services.CustomerService;
 import iseng.cafe.pos.services.MenuOrderService;
-import iseng.cafe.pos.services.PaymentMethodService;
-import iseng.cafe.pos.services.PaymentService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,21 +27,17 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@RequestMapping("/payments")
+@RequestMapping("/menu-orders")
 @RestController
-public class PaymentController {
-
+public class MenuOrderController {
     @Autowired
-    private PaymentService paymentService;
+    private MenuOrderService orderService;
 
     @Autowired
     private CustomerService customerService;
 
     @Autowired
-    private MenuOrderService menuOrderService;
-
-    @Autowired
-    private PaymentMethodService paymentMethodService;
+    private AdminService adminService;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -56,92 +51,87 @@ public class PaymentController {
     })
 
     @PostMapping
-    public ResponseMessage<PaymentResponse> add(
-            @RequestBody @Valid PaymentRequest model){
-        Payment entity = modelMapper.map(model, Payment.class);
+    public ResponseMessage<MenuOrderResponse> add(
+            @RequestBody @Valid MenuOrderRequest model){
+        MenuOrder entity = modelMapper.map(model, MenuOrder.class);
 
         Customer customer = customerService.findById(model.getCustomerId());
         entity.setCustomer(customer);
 
-        MenuOrder menuOrder = menuOrderService.findById(model.getMenuOrderId());
-        entity.setMenuOrder(menuOrder);
+        Admin admin = adminService.findById(model.getAdminId());
+        entity.setAdmin(admin);
 
-        PaymentMethod paymentMethod = paymentMethodService.findById(model.getPaymentMethodId());
-        entity.setPaymentMethod(paymentMethod);
+        entity = orderService.save(entity);
 
-        entity = paymentService.save(entity);
-
-        PaymentResponse data = modelMapper.map(entity, PaymentResponse.class);
+        MenuOrderResponse data = modelMapper.map(entity, MenuOrderResponse.class);
         return ResponseMessage.success(data);
     }
 
     @PutMapping("/{id}")
-    public ResponseMessage<PaymentResponse> edit(
+    public ResponseMessage<MenuOrderResponse> edit(
             @PathVariable Integer id,
-            @RequestBody PaymentRequest model){
+            @RequestBody MenuOrderRequest model){
 
-        Payment entity = paymentService.findById(id);
+        MenuOrder entity = orderService.findById(id);
         if(entity == null){
             throw new EntityNotFoundException();
         }
         Customer customer = customerService.findById(model.getCustomerId());
         entity.setCustomer(customer);
 
-        MenuOrder menuOrder = menuOrderService.findById(model.getMenuOrderId());
-        entity.setMenuOrder(menuOrder);
-
-        PaymentMethod paymentMethod = paymentMethodService.findById(model.getPaymentMethodId());
-        entity.setPaymentMethod(paymentMethod);
+        Admin admin = adminService.findById(model.getAdminId());
+        entity.setAdmin(admin);
 
         modelMapper.map(model, entity);
-        entity = paymentService.save(entity);
+        entity = orderService.save(entity);
 
-        PaymentResponse data = modelMapper.map(entity, PaymentResponse.class);
+        MenuOrderResponse data = modelMapper.map(entity, MenuOrderResponse.class);
         return ResponseMessage.success(data);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseMessage<PaymentResponse> removeById(@PathVariable Integer id){
+    public ResponseMessage<MenuOrderResponse> removeById(@PathVariable Integer id){
 
-        Payment entity = paymentService.removeById(id);
+        MenuOrder entity = orderService.removeById(id);
 
         if(entity == null){
             throw new EntityNotFoundException();
         }
-        PaymentResponse data = modelMapper.map(entity, PaymentResponse.class);
+        MenuOrderResponse data = modelMapper.map(entity, MenuOrderResponse.class);
         return ResponseMessage.success(data);
     }
 
     @GetMapping("/{id}")
-    public ResponseMessage<PaymentResponse> findById(@PathVariable Integer id){
-        Payment entity = paymentService.findById(id);
+    public ResponseMessage<MenuOrderResponse> findById(@PathVariable Integer id){
+        MenuOrder entity = orderService.findById(id);
         if(entity == null){
             throw new EntityNotFoundException();
         }
-        PaymentResponse data = modelMapper.map(entity, PaymentResponse.class);
+        MenuOrderResponse data = modelMapper.map(entity, MenuOrderResponse.class);
         return ResponseMessage.success(data);
     }
 
     @GetMapping
-    public ResponseMessage<PagedList<PaymentResponse>> findAll(
-            @Valid PaymentSearch model
+    public ResponseMessage<PagedList<MenuOrderResponse>> findAll(
+            @Valid MenuOrderSearch model
     ){
-        Payment search = modelMapper.map(model, Payment.class);
+        MenuOrder search = modelMapper.map(model, MenuOrder.class);
 
-        Page<Payment> entityPage = paymentService.findAll(search,
+        Page<MenuOrder> entityPage = orderService.findAll(search,
                 model.getPage(), model.getSize(), model.getSort());
 
-        List<Payment> entities = entityPage.toList();
+        List<MenuOrder> entities = entityPage.toList();
 
-        List<PaymentResponse> models = entities.stream()
-                .map(e -> modelMapper.map(e, PaymentResponse.class))
+        List<MenuOrderResponse> models = entities.stream()
+                .map(e -> modelMapper.map(e, MenuOrderResponse.class))
                 .collect(Collectors.toList());
 
-        PagedList<PaymentResponse> data = new PagedList(models,
+        PagedList<MenuOrderResponse> data = new PagedList(models,
                 entityPage.getNumber(),
                 entityPage.getSize(),
                 entityPage.getTotalElements());
 
         return ResponseMessage.success(data);
     }
+
 }

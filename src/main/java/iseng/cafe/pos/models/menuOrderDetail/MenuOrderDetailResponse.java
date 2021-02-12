@@ -1,20 +1,13 @@
-package iseng.cafe.pos.entities;
+package iseng.cafe.pos.models.menuOrderDetail;
 
-import javax.persistence.*;
+import iseng.cafe.pos.entities.MenuOrder;
+import iseng.cafe.pos.entities.Snack;
 
-@Table
-@Entity
-public class MenuOrderDetail extends AbstractEntity<Integer>{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class MenuOrderDetailResponse {
     private Integer id;
 
-    @ManyToOne
-    @JoinColumn(name = "menu_order_id", nullable = false)
     private MenuOrder menuOrder;
 
-    @ManyToOne
-    @JoinColumn(name = "snack_id", nullable = false)
     private Snack snack;
 
     private Integer quantity;
@@ -23,12 +16,10 @@ public class MenuOrderDetail extends AbstractEntity<Integer>{
 
     private Double subTotal;
 
-    @Override
     public Integer getId() {
         return id;
     }
 
-    @Override
     public void setId(Integer id) {
         this.id = id;
     }

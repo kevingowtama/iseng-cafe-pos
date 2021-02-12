@@ -1,4 +1,6 @@
 package iseng.cafe.pos.models.paymentMethod;
 
-public class PaymentMethodSearch {
+import iseng.cafe.pos.models.PageSearch;
+
+public class PaymentMethodSearch extends PageSearch {
 }

@@ -6,6 +6,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import iseng.cafe.pos.entities.Admin;
+import iseng.cafe.pos.entities.AdminType;
+import iseng.cafe.pos.entities.Customer;
 import iseng.cafe.pos.models.PagedList;
 import iseng.cafe.pos.models.ResponseMessage;
 import iseng.cafe.pos.models.admin.AdminRequest;
@@ -49,6 +51,9 @@ public class AdminController {
             @RequestBody @Valid AdminRequest model){
         Admin entity = modelMapper.map(model, Admin.class);
 
+        AdminType adminType = adminTypeService.findById(model.getAdminTypeId());
+        entity.setAdminType(adminType);
+
         entity = adminService.save(entity);
 
         AdminResponse data = modelMapper.map(entity, AdminResponse.class);
@@ -64,6 +69,9 @@ public class AdminController {
         if(entity == null){
             throw new EntityNotFoundException();
         }
+
+        AdminType adminType = adminTypeService.findById(model.getAdminTypeId());
+        entity.setAdminType(adminType);
 
         modelMapper.map(model, entity);
         entity = adminService.save(entity);

@@ -5,13 +5,13 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import iseng.cafe.pos.entities.PaymentMethod;
+import iseng.cafe.pos.entities.SnackType;
 import iseng.cafe.pos.models.PagedList;
 import iseng.cafe.pos.models.ResponseMessage;
-import iseng.cafe.pos.models.paymentMethod.PaymentMethodRequest;
-import iseng.cafe.pos.models.paymentMethod.PaymentMethodResponse;
-import iseng.cafe.pos.models.paymentMethod.PaymentMethodSearch;
-import iseng.cafe.pos.services.PaymentMethodService;
+import iseng.cafe.pos.models.snackType.SnackTypeRequest;
+import iseng.cafe.pos.models.snackType.SnackTypeResponse;
+import iseng.cafe.pos.models.snackType.SnackTypeSearch;
+import iseng.cafe.pos.services.SnackTypeService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,11 +22,11 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@RequestMapping("/payment-methods")
+@RequestMapping("/snack-types")
 @RestController
-public class PaymentMethodController {
+public class SnackTypeController {
     @Autowired
-    private PaymentMethodService paymentMethodService;
+    private SnackTypeService snackTypeService;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -40,71 +40,71 @@ public class PaymentMethodController {
     })
 
     @PostMapping
-    public ResponseMessage<PaymentMethodResponse> add(
-            @RequestBody @Valid PaymentMethodRequest model){
-        PaymentMethod entity = modelMapper.map(model, PaymentMethod.class);
+    public ResponseMessage<SnackTypeResponse> add(
+            @RequestBody @Valid SnackTypeRequest model){
+        SnackType entity = modelMapper.map(model, SnackType.class);
 
-        entity = paymentMethodService.save(entity);
+        entity = snackTypeService.save(entity);
 
-        PaymentMethodResponse data = modelMapper.map(entity, PaymentMethodResponse.class);
+        SnackTypeResponse data = modelMapper.map(entity, SnackTypeResponse.class);
         return ResponseMessage.success(data);
     }
 
     @PutMapping("/{id}")
-    public ResponseMessage<PaymentMethodResponse> edit(
+    public ResponseMessage<SnackTypeResponse> edit(
             @PathVariable Integer id,
-            @RequestBody PaymentMethodRequest model){
+            @RequestBody SnackTypeRequest model){
 
-        PaymentMethod entity = paymentMethodService.findById(id);
+        SnackType entity = snackTypeService.findById(id);
         if(entity == null){
             throw new EntityNotFoundException();
         }
 
         modelMapper.map(model, entity);
-        entity = paymentMethodService.save(entity);
+        entity = snackTypeService.save(entity);
 
-        PaymentMethodResponse data = modelMapper.map(entity, PaymentMethodResponse.class);
+        SnackTypeResponse data = modelMapper.map(entity, SnackTypeResponse.class);
         return ResponseMessage.success(data);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseMessage<PaymentMethodResponse> removeById(@PathVariable Integer id){
+    public ResponseMessage<SnackTypeResponse> removeById(@PathVariable Integer id){
 
-        PaymentMethod entity = paymentMethodService.removeById(id);
+        SnackType entity = snackTypeService.removeById(id);
 
         if(entity == null){
             throw new EntityNotFoundException();
         }
-        PaymentMethodResponse data = modelMapper.map(entity, PaymentMethodResponse.class);
+        SnackTypeResponse data = modelMapper.map(entity, SnackTypeResponse.class);
         return ResponseMessage.success(data);
     }
 
     @GetMapping("/{id}")
-    public ResponseMessage<PaymentMethodResponse> findById(@PathVariable Integer id){
-        PaymentMethod entity = paymentMethodService.findById(id);
+    public ResponseMessage<SnackTypeResponse> findById(@PathVariable Integer id){
+        SnackType entity = snackTypeService.findById(id);
         if(entity == null){
             throw new EntityNotFoundException();
         }
-        PaymentMethodResponse data = modelMapper.map(entity, PaymentMethodResponse.class);
+        SnackTypeResponse data = modelMapper.map(entity, SnackTypeResponse.class);
         return ResponseMessage.success(data);
     }
 
     @GetMapping
-    public ResponseMessage<PagedList<PaymentMethodResponse>> findAll(
-            @Valid PaymentMethodSearch model
+    public ResponseMessage<PagedList<SnackTypeResponse>> findAll(
+            @Valid SnackTypeSearch model
     ){
-        PaymentMethod search = modelMapper.map(model, PaymentMethod.class);
+        SnackType search = modelMapper.map(model, SnackType.class);
 
-        Page<PaymentMethod> entityPage = paymentMethodService.findAll(search,
+        Page<SnackType> entityPage = snackTypeService.findAll(search,
                 model.getPage(), model.getSize(), model.getSort());
 
-        List<PaymentMethod> entities = entityPage.toList();
+        List<SnackType> entities = entityPage.toList();
 
-        List<PaymentMethodResponse> models = entities.stream()
-                .map(e -> modelMapper.map(e, PaymentMethodResponse.class))
+        List<SnackTypeResponse> models = entities.stream()
+                .map(e -> modelMapper.map(e, SnackTypeResponse.class))
                 .collect(Collectors.toList());
 
-        PagedList<PaymentMethodResponse> data = new PagedList(models,
+        PagedList<SnackTypeResponse> data = new PagedList(models,
                 entityPage.getNumber(),
                 entityPage.getSize(),
                 entityPage.getTotalElements());

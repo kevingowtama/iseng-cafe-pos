@@ -3,7 +3,7 @@ package iseng.cafe.pos.services.impl;
 import iseng.cafe.pos.entities.Payment;
 import iseng.cafe.pos.repositories.PaymentRepository;
 import iseng.cafe.pos.services.CustomerService;
-import iseng.cafe.pos.services.OrderService;
+import iseng.cafe.pos.services.MenuOrderService;
 import iseng.cafe.pos.services.PaymentMethodService;
 import iseng.cafe.pos.services.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class PaymentServiceImpl extends CommonServiceImpl<Payment, Integer> implements PaymentService {
     @Autowired
-    private OrderService orderService;
+    private MenuOrderService menuOrderService;
 
     @Autowired
     private PaymentMethodService paymentMethodService;

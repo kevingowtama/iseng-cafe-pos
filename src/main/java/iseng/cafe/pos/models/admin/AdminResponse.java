@@ -1,5 +1,8 @@
 package iseng.cafe.pos.models.admin;
 
+import iseng.cafe.pos.entities.AdminType;
+import iseng.cafe.pos.models.adminType.AdminTypeResponse;
+
 public class AdminResponse {
     private Integer id;
 
@@ -10,6 +13,8 @@ public class AdminResponse {
     private String username;
 
     private String password;
+
+    private AdminTypeResponse adminTypeResponse;
 
     public Integer getId() {
         return id;
