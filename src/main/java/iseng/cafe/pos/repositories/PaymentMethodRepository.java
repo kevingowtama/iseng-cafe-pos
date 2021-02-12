@@ -1,6 +1,5 @@
 package iseng.cafe.pos.repositories;
 
-import iseng.cafe.pos.entities.AdminType;
 import iseng.cafe.pos.entities.PaymentMethod;
 import org.springframework.data.jpa.repository.JpaRepository;
 

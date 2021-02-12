@@ -1,6 +1,5 @@
 package iseng.cafe.pos.models.admin;
 
-import iseng.cafe.pos.entities.AdminType;
 import iseng.cafe.pos.models.adminType.AdminTypeResponse;
 
 public class AdminResponse {
@@ -14,7 +13,7 @@ public class AdminResponse {
 
     private String password;
 
-    private AdminTypeResponse adminTypeResponse;
+    private AdminTypeResponse adminType;
 
     public Integer getId() {
         return id;
@@ -54,5 +53,13 @@ public class AdminResponse {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public AdminTypeResponse getAdminType() {
+        return adminType;
+    }
+
+    public void setAdminType(AdminTypeResponse adminType) {
+        this.adminType = adminType;
     }
 }

@@ -5,8 +5,6 @@ import iseng.cafe.pos.entities.SnackType;
 
 public class SnackRequest {
 
-    private Integer id;
-
     private String name;
 
     private Integer snackTypeId;
@@ -16,14 +14,6 @@ public class SnackRequest {
     private Double price;
 
     private String description;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;

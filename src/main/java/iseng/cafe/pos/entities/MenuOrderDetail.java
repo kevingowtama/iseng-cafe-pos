@@ -72,4 +72,6 @@ public class MenuOrderDetail extends AbstractEntity<Integer>{
     public void setSubTotal(Double subTotal) {
         this.subTotal = subTotal;
     }
+
+
 }

@@ -1,5 +1,9 @@
 package iseng.cafe.pos.models.menuOrder;
 
+import iseng.cafe.pos.entities.Customer;
+import iseng.cafe.pos.models.admin.AdminResponse;
+import iseng.cafe.pos.models.customer.CustomerResponse;
+
 public class MenuOrderResponse {
     private Integer id;
 
@@ -7,9 +11,9 @@ public class MenuOrderResponse {
 
     private String description;
 
-    private Integer customerId;
+    private CustomerResponse customer;
 
-    private Integer adminId;
+    private AdminResponse admin;
 
     public Integer getId() {
         return id;
@@ -35,19 +39,20 @@ public class MenuOrderResponse {
         this.description = description;
     }
 
-    public Integer getCustomerId() {
-        return customerId;
+    public CustomerResponse getCustomer() {
+        return customer;
     }
 
-    public void setCustomerId(Integer customerId) {
-        this.customerId = customerId;
+    public void setCustomer(CustomerResponse customer) {
+        this.customer = customer;
     }
 
-    public Integer getAdminId() {
-        return adminId;
+    public AdminResponse getAdmin() {
+        return admin;
     }
 
-    public void setAdminId(Integer adminId) {
-        this.adminId = adminId;
+    public void setAdmin(AdminResponse admin) {
+        this.admin = admin;
     }
+
 }

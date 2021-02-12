@@ -9,14 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MenuMenuOrderServiceImpl extends CommonServiceImpl<MenuOrder, Integer> implements MenuOrderService {
+public class MenuOrderServiceImpl extends CommonServiceImpl<MenuOrder, Integer> implements MenuOrderService {
     @Autowired
     private CustomerService customerService;
 
     @Autowired
     private AdminService adminService;
 
-    public MenuMenuOrderServiceImpl(MenuOrderRepository repository) {
+    public MenuOrderServiceImpl(MenuOrderRepository repository) {
         super(repository);
     }
 

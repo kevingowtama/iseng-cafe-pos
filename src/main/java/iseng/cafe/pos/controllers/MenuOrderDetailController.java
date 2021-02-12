@@ -5,14 +5,14 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import iseng.cafe.pos.entities.MenuOrderDetail;
+import iseng.cafe.pos.entities.*;
 import iseng.cafe.pos.models.PagedList;
 import iseng.cafe.pos.models.ResponseMessage;
 import iseng.cafe.pos.models.menuOrder.MenuOrderRequest;
 import iseng.cafe.pos.models.menuOrderDetail.MenuOrderDetailRequest;
 import iseng.cafe.pos.models.menuOrderDetail.MenuOrderDetailResponse;
 import iseng.cafe.pos.models.menuOrderDetail.MenuOrderDetailSearch;
-import iseng.cafe.pos.services.CustomerService;
+import iseng.cafe.pos.services.SnackService;
 import iseng.cafe.pos.services.MenuOrderDetailService;
 import iseng.cafe.pos.services.MenuOrderService;
 import org.modelmapper.ModelMapper;
@@ -35,7 +35,7 @@ public class MenuOrderDetailController {
     private MenuOrderService menuOrderService;
 
     @Autowired
-    private CustomerService customerService;
+    private SnackService snackService;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -50,8 +50,14 @@ public class MenuOrderDetailController {
 
     @PostMapping
     public ResponseMessage<MenuOrderDetailResponse> add(
-            @RequestBody @Valid MenuOrderRequest model){
+            @RequestBody @Valid MenuOrderDetailRequest model){
         MenuOrderDetail entity = modelMapper.map(model, MenuOrderDetail.class);
+
+        MenuOrder menuOrder = menuOrderService.findById(model.getMenuOrderId());
+        entity.setMenuOrder(menuOrder);
+
+        Snack snack = snackService.findById(model.getSnackId());
+        entity.setSnack(snack);
 
         entity = menuOrderDetailService.save(entity);
 
@@ -68,6 +74,12 @@ public class MenuOrderDetailController {
         if(entity == null){
             throw new EntityNotFoundException();
         }
+
+        MenuOrder menuOrder = menuOrderService.findById(model.getMenuOrderId());
+        entity.setMenuOrder(menuOrder);
+
+        Snack snack = snackService.findById(model.getSnackId());
+        entity.setSnack(snack);
 
         modelMapper.map(model, entity);
         entity = menuOrderDetailService.save(entity);
