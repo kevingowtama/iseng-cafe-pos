@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Table
 @Entity
-public class AdminType {
+public class AdminType extends AbstractEntity<Integer>{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

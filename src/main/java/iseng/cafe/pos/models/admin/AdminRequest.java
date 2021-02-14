@@ -1,7 +1,5 @@
 package iseng.cafe.pos.models.admin;
 
-import iseng.cafe.pos.entities.AdminType;
-
 public class AdminRequest {
     private String name;
 

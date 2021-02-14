@@ -10,39 +10,27 @@ import java.time.LocalDateTime;
 public abstract class AbstractEntity<ID>{
 
     // @JsonIgnore -> to retract property from JSON response
-    @Column(name = "created_date")
-    private LocalDateTime createdDate;
+    private LocalDateTime createdAt;
 
-    @Column(name = "modified_date")
-    private LocalDateTime modifiedDate;
+    private LocalDateTime updatedAt;
 
     public abstract ID getId();
 
     public abstract void setId(ID id);
 
-    public LocalDateTime getCreatedDate() {
-        return createdDate;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreatedDate(LocalDateTime createdDate) {
-        this.createdDate = createdDate;
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public LocalDateTime getModifiedDate() {
-        return modifiedDate;
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setModifiedDate(LocalDateTime modifiedDate) {
-        this.modifiedDate = modifiedDate;
-    }
-
-    @PrePersist
-    public void prePersist(){
-        createdDate = LocalDateTime.now();
-    }
-
-    @PreUpdate
-    public void preUpdate(){
-        modifiedDate = LocalDateTime.now();
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

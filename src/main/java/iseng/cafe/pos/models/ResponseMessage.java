@@ -53,6 +53,9 @@ public class ResponseMessage <T>{
     public static <T> ResponseMessage<T> success(T data){
         return new ResponseMessage<>(HttpStatus.OK.value(), null, data);
     }
+    public static <T> ResponseMessage<T> success(String message, T data){
+        return new ResponseMessage<>(HttpStatus.OK.value(), message, data);
+    }
 
     public static ResponseMessage error(HttpStatus status){
         return error(status.value(), status.getReasonPhrase());
