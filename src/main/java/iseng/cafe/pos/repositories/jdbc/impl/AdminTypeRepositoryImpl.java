@@ -70,14 +70,4 @@ public class AdminTypeRepositoryImpl implements AdminTypeRepository{
         return list;
     }
 
-    private List<AdminType> getList(String query){
-        List<AdminType> list = jdbcTemplate.query("SELECT id, name FROM ", (rs, i) -> {
-            AdminType adminType = new AdminType();
-
-            adminType.setId(rs.getInt("region_id"));
-            adminType.setName(rs.getString("name"));
-            return adminType;
-        });
-        return list;
-    }
 }

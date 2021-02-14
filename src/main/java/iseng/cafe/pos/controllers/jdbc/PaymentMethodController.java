@@ -5,23 +5,22 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import iseng.cafe.pos.entities.AdminType;
+import iseng.cafe.pos.entities.PaymentMethod;
 import iseng.cafe.pos.exceptions.EntityNotFoundException;
 import iseng.cafe.pos.models.ResponseMessage;
-import iseng.cafe.pos.models.adminType.AdminTypeRequest;
-import iseng.cafe.pos.services.jdbc.AdminTypeService;
+import iseng.cafe.pos.models.paymentMethod.PaymentMethodRequest;
+import iseng.cafe.pos.services.jdbc.PaymentMethodService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
-@RequestMapping("/admin-types")
 @RestController
-public class AdminTypeController {
-
+@RequestMapping("/payment-methods")
+public class PaymentMethodController {
     @Autowired
-    private AdminTypeService adminTypeService;
+    private PaymentMethodService paymentMethodService;
 
     @ApiResponses(value = {
             @ApiResponse(responseCode = "500", description = "Internal server error."),
@@ -32,47 +31,46 @@ public class AdminTypeController {
     })
 
     @PostMapping
-    public ResponseMessage<AdminType> save(@RequestBody @Valid AdminTypeRequest model){
-        AdminType adminType = new AdminType();
+    public ResponseMessage<PaymentMethod> save(@RequestBody @Valid PaymentMethodRequest model){
+        PaymentMethod paymentMethod = new PaymentMethod();
 
-        adminType.setName(model.getName());
+        paymentMethod.setName(model.getName());
 
-        AdminType data = adminTypeService.save(adminType);
+        PaymentMethod data = paymentMethodService.save(paymentMethod);
         return ResponseMessage.success("New data has been added", data);
     }
 
     @PutMapping("/{id}")
-    public ResponseMessage<AdminType> update(@RequestBody @Valid AdminTypeRequest model, @PathVariable Integer id){
-        AdminType adminType = adminTypeService.findById(id);
+    public ResponseMessage<PaymentMethod> update(@RequestBody @Valid PaymentMethodRequest model, @PathVariable Integer id){
+        PaymentMethod paymentMethod = paymentMethodService.findById(id);
 
-        if(adminType.getId() == null){
+        if(paymentMethod.getId() == null){
             throw new EntityNotFoundException();
         }
-        adminType.setName(model.getName());
+        paymentMethod.setName(model.getName());
 
-        AdminType data = adminTypeService.save(adminType);
+        PaymentMethod data = paymentMethodService.save(paymentMethod);
         return ResponseMessage.success("Data has been updated", data);
     }
 
     @DeleteMapping("/{id}")
     public ResponseMessage<Boolean> remove(@PathVariable Integer id){
-        Boolean data = adminTypeService.remove(id);
+        Boolean data = paymentMethodService.remove(id);
 
         return ResponseMessage.success("Data has been deleted", data);
     }
 
     @GetMapping("/{id}")
-    public ResponseMessage<AdminType> findById(@PathVariable @Valid Integer id){
-        AdminType data = adminTypeService.findById(id);
+    public ResponseMessage<PaymentMethod> findById(@PathVariable @Valid Integer id){
+        PaymentMethod data = paymentMethodService.findById(id);
 
         return ResponseMessage.success("Get data success", data);
     }
 
     @GetMapping
-    public ResponseMessage<List<AdminType>> findAll(){
-        List<AdminType> data = adminTypeService.findAll();
+    public ResponseMessage<List<PaymentMethod>> findAll(){
+        List<PaymentMethod> data = paymentMethodService.findAll();
 
         return ResponseMessage.success("Get list of data success", data);
     }
-
 }

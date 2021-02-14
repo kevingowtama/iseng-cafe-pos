@@ -91,7 +91,4 @@ public class AdminRepositoryImpl implements AdminRepository{
         });
         return list;
     }
-
-
-
 }
