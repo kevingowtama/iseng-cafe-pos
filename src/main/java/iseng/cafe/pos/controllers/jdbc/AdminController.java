@@ -52,24 +52,10 @@ public class AdminController {
         return ResponseMessage.success("New data has been added", data);
     }
 
-    @GetMapping("/{id}")
-    public ResponseMessage<Admin> findById(@PathVariable @Valid Integer id){
-        Admin data = adminService.findById(id);
-
-        return ResponseMessage.success(data);
-    }
-
-    @GetMapping
-    public ResponseMessage<List<Admin>> findAll(){
-        List<Admin> data = adminService.findAll();
-
-        return ResponseMessage.success(data);
-    }
-
     @PutMapping("/{id}")
     public ResponseMessage<Admin> update(@RequestBody @Valid AdminRequest model, @PathVariable Integer id){
         Admin admin = adminService.findById(id);
-        System.out.println(admin.getId());
+
         if(admin.getId() == null){
             throw new EntityNotFoundException();
         }
@@ -91,4 +77,19 @@ public class AdminController {
 
         return ResponseMessage.success("Data has been deleted", data);
     }
+
+    @GetMapping("/{id}")
+    public ResponseMessage<Admin> findById(@PathVariable @Valid Integer id){
+        Admin data = adminService.findById(id);
+
+        return ResponseMessage.success(data);
+    }
+
+    @GetMapping
+    public ResponseMessage<List<Admin>> findAll(){
+        List<Admin> data = adminService.findAll();
+
+        return ResponseMessage.success(data);
+    }
+
 }

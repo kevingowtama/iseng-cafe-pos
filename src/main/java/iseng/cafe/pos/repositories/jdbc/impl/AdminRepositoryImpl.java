@@ -53,9 +53,9 @@ public class AdminRepositoryImpl implements AdminRepository{
             admin.setName(rs.getString("admin.email"));
             admin.setEmail(rs.getString("admin.email"));
             admin.setUsername(rs.getString("admin.username"));
-            adminType.setCreatedAt(rs.getDate("created_at")
+            admin.setCreatedAt(rs.getDate("admin.created_at")
                     .toLocalDate().atTime(rs.getTime("created_at").toLocalTime()));
-            adminType.setUpdatedAt(rs.getDate("updated_at")
+            admin.setUpdatedAt(rs.getDate("admin.updated_at")
                     .toLocalDate().atTime(rs.getTime("updated_at").toLocalTime()));
 
             adminType.setId(rs.getInt("admin_type.id"));
@@ -78,9 +78,9 @@ public class AdminRepositoryImpl implements AdminRepository{
             admin.setName(rs.getString("admin.email"));
             admin.setEmail(rs.getString("admin.email"));
             admin.setUsername(rs.getString("admin.username"));
-            adminType.setCreatedAt(rs.getDate("created_at")
+            admin.setCreatedAt(rs.getDate("admin.created_at")
                     .toLocalDate().atTime(rs.getTime("created_at").toLocalTime()));
-            adminType.setUpdatedAt(rs.getDate("updated_at")
+            admin.setUpdatedAt(rs.getDate("admin.updated_at")
                     .toLocalDate().atTime(rs.getTime("updated_at").toLocalTime()));
 
             adminType.setId(rs.getInt("admin_type.id"));
